@@ -6,7 +6,14 @@ const port = 3000;
 
 app.use(express.static("public"));
 
+// Middleware to parse JSON and URL encoded bodies
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Set the view engine to ejs
 app.set("view engine", "ejs");
+
+// just some test middleware
 app.use(logger);
 
 app.get("/", (req, res) => {
@@ -19,7 +26,6 @@ app.use("/register", registerRouter);
 
 // LOGIN
 const loginRouter = require("./routes/login");
-
 app.use("/login", loginRouter);
 
 function logger(req, res, next) {

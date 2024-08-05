@@ -6,9 +6,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  setTimeout(() => {
-    res.redirect("login");
-  }, 1000);
+  const { username, password } = req.body;
+  res.status(200).json({ message: `User ${username} registered` });
 });
 
 // chain multiple methods to the same route
