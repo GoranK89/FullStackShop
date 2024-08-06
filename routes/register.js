@@ -6,8 +6,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const { username, password } = req.body;
-  res.status(200).json({ message: `User ${username} registered` });
+  const { email, password } = req.body;
+  res.status(200).json({ message: `Email ${email} registered` });
 });
 
 // chain multiple methods to the same route

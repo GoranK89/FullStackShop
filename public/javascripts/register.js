@@ -1,4 +1,6 @@
 const form = document.querySelector("form");
+const emailField = form.querySelector("#email");
+const passwordField = form.querySelector("#password");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -17,7 +19,14 @@ form.addEventListener("submit", async (e) => {
 
     if (response.ok) {
       const result = await response.json();
-      console.log(result.message);
+      console.log(result);
+      // empty the form
+      emailField.value = "";
+      passwordField.value = "";
+      // redirect to login page after 1 second
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1000);
     } else {
       console.error("Error:", response.status);
     }
