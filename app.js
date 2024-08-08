@@ -17,18 +17,20 @@ app.set("view engine", "ejs");
 // just some test middleware
 app.use(logger);
 
+// Home route
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-// REGISTER
+// REGISTER route
 const registerRouter = require("./routes/register");
 app.use("/register", registerRouter);
 
-// LOGIN
+// LOGIN route
 const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
 
+// test middleware
 function logger(req, res, next) {
   console.log(req.originalUrl);
   next();

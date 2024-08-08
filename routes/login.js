@@ -1,14 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const usersController = require("../controllers/users");
 
 router.get("/", (req, res) => {
   res.render("login");
 });
 
-router.post("/", (req, res) => {
-  // if seller, redirect to seller route
-  // if buyer, redirect to buyer route
-  res.redirect("/securedRoute");
-});
+router.post("/", usersController.login);
 
 module.exports = router;
