@@ -17,7 +17,16 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required />
       <br />
+      <br />
+      <label for="userType">Register as:</label>
+      <input type="radio" id="seller" name="userType" value="seller" required />
+      <label for="seller">Seller</label>
+      <input type="radio" id="buyer" name="userType" value="buyer" required />
+      <label for="buyer">Buyer</label>
+      <br />
       <button type="submit">Register</button>
     </form>
+    <!-- Placeholder for the message -->
+    <div id="registration-message"></div>
   </body>
 </html>

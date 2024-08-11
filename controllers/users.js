@@ -4,10 +4,10 @@ const queries = require("../src/fss/queries");
 
 // REGISTRATION controller
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, userType } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await pool.query(queries.register, [email, hashedPassword]);
+    await pool.query(queries.register, [email, hashedPassword, userType]);
 
     res.status(200).json({ message: `Email ${email} registered` });
   } catch (error) {

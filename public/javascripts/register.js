@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const emailField = form.querySelector("#email");
 const passwordField = form.querySelector("#password");
+const messageDiv = document.querySelector("#registration-message");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -19,16 +20,19 @@ form.addEventListener("submit", async (e) => {
 
     if (response.ok) {
       const result = await response.json();
-      console.log(result);
+
       // empty the form
       emailField.value = "";
       passwordField.value = "";
-      // redirect to login page after 1 second
+      // display success message
+      messageDiv.textContent = `${result.message} - Redirecting to login page...`;
+      // redirect to login page after 2 seconds
       setTimeout(() => {
         window.location.href = "/login";
-      }, 1000);
+      }, 2000);
     } else {
       console.error("Error:", response.status);
+      messageDiv.textContent = "Error registering user. Please try again.";
     }
   } catch (error) {
     console.error("Error:", error);

@@ -14,9 +14,7 @@ app.use(express.json());
 // Set the view engine to ejs
 app.set("view engine", "ejs");
 
-// just some test middleware
-app.use(logger);
-
+// ROUTES
 // Home route
 app.get("/", (req, res) => {
   res.render("index");
@@ -29,12 +27,6 @@ app.use("/register", registerRouter);
 // LOGIN route
 const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
-
-// test middleware
-function logger(req, res, next) {
-  console.log(req.originalUrl);
-  next();
-}
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

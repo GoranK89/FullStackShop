@@ -32,11 +32,17 @@ body {
 /* Navbar */
 .navbar {
   margin-bottom: 5rem;
+  padding: 1rem;
 }
 
 .nav-links {
   display: flex;
   justify-content: space-between;
+}
+
+.login-register-container {
+  display: flex;
+  gap: 2rem;
 }
 
 /* Landing page content */
