@@ -28,6 +28,10 @@ app.use("/register", registerRouter);
 const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
 
+// LOGOUT route
+const logoutRouter = require("./routes/logout");
+app.use("/logout", logoutRouter);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

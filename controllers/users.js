@@ -1,11 +1,19 @@
 const pool = require("../db");
 const bcrypt = require("bcrypt");
 const queries = require("../src/fss/queries");
+const {
+  createAccessToken,
+  createRefreshToken,
+  sendAccessToken,
+  sendRefreshToken,
+} = require("../tokens");
 
 // REGISTRATION controller
 const register = async (req, res) => {
   const { email, password, userType } = req.body;
   try {
+    // TODO: Check if email already exists
+
     const hashedPassword = await bcrypt.hash(password, 10);
     await pool.query(queries.register, [email, hashedPassword, userType]);
 
@@ -27,6 +35,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
+    // Check if password is matching
     const user = result.rows[0];
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -34,11 +43,23 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    res.status(200).json({ message: "Login successful" });
-  } catch (error) {
-    console.error("Error logging in user: ", error);
-    res.status(500).json({ error: "Internal Server Error during login" });
+    //Create Refresh and Access tokens
+    const accessToken = createAccessToken(user.id);
+    const refreshToken = createRefreshToken(user.id);
+    await pool.query(queries.updateRefreshToken, [refreshToken, user.id]);
+
+    // Send tokens, refresh as cookie and access as response
+    sendRefreshToken(res, refreshToken);
+    sendAccessToken(res, req, accessToken);
+  } catch (err) {
+    res.send({ error: `${err.message}` });
   }
+};
+
+// LOGOUT controller
+const logout = async (req, res) => {
+  res.clearCookie("refreshToken");
+  return res.send({ message: "Logged out" });
 };
 
 // Get all users
@@ -51,4 +72,4 @@ const getUsers = (req, res) => {
   });
 };
 
-module.exports = { getUsers, register, login };
+module.exports = { getUsers, register, login, logout };
