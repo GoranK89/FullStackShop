@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="stylesheets/style.css" />
+    <script src="/javascripts/login.js" defer></script>
     <title>Login</title>
   </head>
   <body>
     <header><%- include('partials/navbar') %></header>
     <main>
-      <div class="container">
+      <div class="login-container">
         <h1>Login</h1>
-        <form action="/login" method="POST">
+        <form class="login-form" action="/login" method="POST">
           <div class="form-group">
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required />
@@ -23,5 +24,6 @@
           <button type="submit">Login</button>
         </form>
       </div>
+      <div id="login-message"></div>
   </body>
 </html>

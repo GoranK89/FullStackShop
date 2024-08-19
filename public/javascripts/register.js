@@ -1,12 +1,12 @@
-const form = document.querySelector("form");
+const registerForm = document.querySelector(".register-form");
 const emailField = form.querySelector("#email");
 const passwordField = form.querySelector("#password");
 const messageDiv = document.querySelector("#registration-message");
 
-form.addEventListener("submit", async (e) => {
+registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);
+  const formData = new FormData(registerForm);
   const data = Object.fromEntries(formData);
 
   try {

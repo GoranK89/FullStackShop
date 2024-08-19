@@ -32,6 +32,10 @@ app.use("/login", loginRouter);
 const logoutRouter = require("./routes/logout");
 app.use("/logout", logoutRouter);
 
+// STORE route
+const storeRouter = require("./routes/store");
+app.use("/store", storeRouter);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
