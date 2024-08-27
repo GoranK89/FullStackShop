@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
 const port = 3000;
 
-app.use(express.static("public"));
+app.use(cors()); // Enable CORS for all routes
 
 // Middleware to parse JSON and URL encoded bodies
 app.use(express.urlencoded({ extended: true }));
