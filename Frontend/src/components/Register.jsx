@@ -56,27 +56,33 @@ function Register() {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <div>
-        <input
-          type="radio"
-          name="userType"
-          value="seller"
-          checked={userType === "seller"}
-          onChange={(e) => setUserType(e.target.value)}
-          required
-        />
-        <label>Seller</label>
-        <input
-          type="radio"
-          name="userType"
-          value="buyer"
-          checked={userType === "buyer"}
-          onChange={(e) => setUserType(e.target.value)}
-          required
-        />
-        <label>Buyer</label>
+      <div className={styles.radioButtons}>
+        <div className={styles.radioOption}>
+          <input
+            type="radio"
+            name="userType"
+            value="seller"
+            checked={userType === "seller"}
+            onChange={(e) => setUserType(e.target.value)}
+            required
+          />
+          <label>Seller</label>
+        </div>
+        <div className={styles.radioOption}>
+          <input
+            type="radio"
+            name="userType"
+            value="buyer"
+            checked={userType === "buyer"}
+            onChange={(e) => setUserType(e.target.value)}
+            required
+          />
+          <label>Buyer</label>
+        </div>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" className={styles.buttonSubmit}>
+        Register
+      </button>
       {serverMessage && <p>{serverMessage}</p>}
     </form>
   );
