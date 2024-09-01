@@ -1,38 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
 import styles from "./Register.module.css";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
-  const [serverMessage, setServerMessage] = useState("");
+  const { register, serverMessage } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const registerUser = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password, userType }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(`${data.error}`);
-        }
-
-        setServerMessage(`${data.message}`);
-      } catch (error) {
-        setServerMessage(`Error: ${error.message}`);
-      }
-    };
-
-    await registerUser();
+    await register(email, password, userType);
 
     setEmail("");
     setPassword("");

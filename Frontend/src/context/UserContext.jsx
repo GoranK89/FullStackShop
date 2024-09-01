@@ -9,6 +9,28 @@ export const UserProvider = ({ children }) => {
   const [serverMessage, setServerMessage] = useState("");
   const navigate = useNavigate();
 
+  const register = async (email, password, userType) => {
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, userType }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(`${data.error}`);
+      }
+
+      setServerMessage(`${data.message}`);
+    } catch (error) {
+      setServerMessage(`Error: ${error.message}`);
+    }
+  };
+
   const login = async (email, password) => {
     try {
       const response = await fetch("http://localhost:3000/login", {
@@ -65,6 +87,7 @@ export const UserProvider = ({ children }) => {
         setUser,
         accessToken,
         setAccessToken,
+        register,
         login,
         logout,
         serverMessage,
