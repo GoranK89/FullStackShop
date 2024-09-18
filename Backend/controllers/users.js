@@ -50,8 +50,8 @@ const login = async (req, res) => {
     await pool.query(queries.updateRefreshToken, [refreshToken, user.id]);
 
     // Send tokens, refresh as cookie and access as response
-    // sendRefreshToken(res, refreshToken); - obsolete for now
-    // sendAccessToken(res, req, accessToken); - obsolete for now
+    // sendRefreshToken(res, refreshToken); - obsolete for now, using local storage
+    // sendAccessToken(res, req, accessToken); - obsolete for now, using local storage
     sendTokens(res, accessToken, refreshToken, email);
   } catch (err) {
     res.send({ error: `${err.message}` });

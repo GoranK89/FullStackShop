@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import useApi from "../hooks/useApi";
 
 export const UserContext = createContext();
 
@@ -11,21 +12,15 @@ export const UserProvider = ({ children }) => {
 
   const effectRan = useRef(false);
 
+  const { apiRequest, loading, error } = useApi();
+
   const register = async (email, password, userType) => {
     try {
-      const response = await fetch("http://localhost:5000/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password, userType }),
+      const data = await apiRequest("http://localhost:5000/register", "POST", {
+        email,
+        password,
+        userType,
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`${data.error}`);
-      }
 
       setServerMessage(`${data.message}`);
     } catch (error) {
@@ -35,19 +30,11 @@ export const UserProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:5000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const data = await apiRequest("http://localhost:5000/login", "POST", {
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`${data.error}`);
-      }
       setUser(data.email);
       setAccessToken(data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
@@ -62,19 +49,8 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch("http://localhost:5000/logout", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const data = await apiRequest("http://localhost:5000/logout", "POST");
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(`${data.error}`);
-      }
       localStorage.removeItem("refreshToken");
       setUser(null);
       setAccessToken(null);
@@ -95,22 +71,12 @@ export const UserProvider = ({ children }) => {
         const refreshToken = localStorage.getItem("refreshToken");
         if (!refreshToken) return;
 
-        const response = await fetch("http://localhost:5000/refresh", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            refreshToken: localStorage.getItem("refreshToken"),
-          }),
+        const data = await apiRequest("http://localhost:5000/refresh", "POST", {
+          refreshToken,
         });
-        if (!response.ok) {
-          throw new Error("Failed to fetch refresh token");
-        }
-        const result = await response.json();
-        setAccessToken(result.accessToken);
-        localStorage.setItem("refreshToken", result.refreshToken);
+
+        setAccessToken(data.accessToken);
+        localStorage.setItem("refreshToken", data.refreshToken);
       } catch (error) {
         console.error("Error refreshing token:", error);
       }
