@@ -5,16 +5,21 @@ const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const port = 3000;
+const port = 5000;
 
-app.use(cors()); // Enable CORS for all routes
+// Configure CORS options
+const corsOptions = {
+  origin: "http://localhost:5173", // Replace with your frontend's origin
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
 
+// Enable CORS for all routes with the specified options
+app.use(cors(corsOptions));
+// cookie parser
+app.use(cookieParser());
 // Middleware to parse JSON and URL encoded bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// cookie parser
-app.use(cookieParser());
 
 // ROUTES
 // REGISTER route
@@ -39,12 +44,8 @@ app.use("/protected", protectedRouter);
 
 // Refresh Token route
 const refreshTokenRouter = require("./routes/refreshToken");
-app.use("/refresh_token", refreshTokenRouter);
+app.use("/refresh", refreshTokenRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-/*
-Sellers who can: Register as Seller, Login, Setup their store, Add products, Edit products, Delete products, View Received Orders, Update Order Status (Pending, Shipped, Delivered), Buyers who can register, Login, Browse products by all sellers, Add products to cart, Checkout, View order history, View order status, Cancel order, View seller profile, View seller products
-*/

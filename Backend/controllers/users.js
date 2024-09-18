@@ -6,6 +6,7 @@ const {
   createRefreshToken,
   sendAccessToken,
   sendRefreshToken,
+  sendTokens,
 } = require("../tokens");
 
 // REGISTRATION controller
@@ -49,8 +50,9 @@ const login = async (req, res) => {
     await pool.query(queries.updateRefreshToken, [refreshToken, user.id]);
 
     // Send tokens, refresh as cookie and access as response
-    sendRefreshToken(res, refreshToken);
-    sendAccessToken(res, req, accessToken);
+    // sendRefreshToken(res, refreshToken); - obsolete for now
+    // sendAccessToken(res, req, accessToken); - obsolete for now
+    sendTokens(res, accessToken, refreshToken, email);
   } catch (err) {
     res.send({ error: `${err.message}` });
   }
@@ -58,7 +60,7 @@ const login = async (req, res) => {
 
 // LOGOUT controller
 const logout = async (_req, res) => {
-  res.clearCookie("refreshtoken", { path: "/refresh_token" });
+  res.clearCookie("refresh", { path: "/refresh" });
   return res.send({ message: "Logged out" });
 };
 

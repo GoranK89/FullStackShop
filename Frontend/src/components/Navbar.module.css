@@ -7,6 +7,7 @@
 
 .navList {
   list-style: none;
+  align-items: center;
   padding: 0;
   margin: 0;
   display: flex;
@@ -24,4 +25,13 @@
 
 .navLink:hover {
   text-decoration: underline;
+}
+
+.logoutBtn {
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }

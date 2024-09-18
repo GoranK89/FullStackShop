@@ -2,16 +2,18 @@ const jwt = require("jsonwebtoken");
 
 const createAccessToken = (userId) => {
   return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15s",
+    expiresIn: "15m",
   });
 };
 
 const createRefreshToken = (userId) => {
-  return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
+  const token = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",
   });
+  return token;
 };
 
+// for now sendAccessToken and sendRefreshToken are obsolete
 const sendAccessToken = (res, req, accessToken) => {
   res.send({
     accessToken,
@@ -19,10 +21,22 @@ const sendAccessToken = (res, req, accessToken) => {
   });
 };
 
-const sendRefreshToken = (res, refreshToken) => {
-  res.cookie("refreshToken", refreshToken, {
+const sendRefreshToken = (res, refreshtoken) => {
+  // for some reason frontend does not send the cookie to the backend
+  res.cookie("refresh", refreshtoken, {
     httpOnly: true,
-    path: "/refresh_token",
+    sameSite: "None",
+    secure: false,
+    path: "/refresh",
+  });
+};
+
+// this one will be used instead
+const sendTokens = (res, accessToken, refreshToken, email) => {
+  res.send({
+    accessToken,
+    refreshToken,
+    email,
   });
 };
 
@@ -31,4 +45,5 @@ module.exports = {
   createRefreshToken,
   sendAccessToken,
   sendRefreshToken,
+  sendTokens,
 };
