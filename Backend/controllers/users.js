@@ -38,6 +38,8 @@ const login = async (req, res) => {
 
     // Check if password is matching
     const user = result.rows[0];
+    const userType = user.user_type;
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -52,7 +54,7 @@ const login = async (req, res) => {
     // Send tokens, refresh as cookie and access as response
     // sendRefreshToken(res, refreshToken); - obsolete for now, using local storage
     // sendAccessToken(res, req, accessToken); - obsolete for now, using local storage
-    sendTokens(res, accessToken, refreshToken, email);
+    sendTokens(res, accessToken, refreshToken, email, userType);
   } catch (err) {
     res.send({ error: `${err.message}` });
   }
@@ -60,7 +62,7 @@ const login = async (req, res) => {
 
 // LOGOUT controller
 const logout = async (_req, res) => {
-  res.clearCookie("refresh", { path: "/refresh" });
+  // res.clearCookie("refresh", { path: "/refresh" }); - not necessary untul cookies are used
   return res.send({ message: "Logged out" });
 };
 

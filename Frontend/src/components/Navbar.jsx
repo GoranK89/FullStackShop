@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserContext";
 import styles from "./Navbar.module.css";
 
 function Navbar() {
-  const { user, accessToken, logout } = useContext(UserContext);
+  const { user, accessToken, logout, userType } = useContext(UserContext);
 
   return (
     <header>
@@ -22,7 +22,14 @@ function Navbar() {
               </Link>
             </li>
           )}
-          {accessToken && (
+          {userType === "seller" && (
+            <li className={styles.navItem}>
+              <Link to="/dashboard" className={styles.navLink}>
+                Dashboard
+              </Link>
+            </li>
+          )}
+          {accessToken && userType === "buyer" && (
             <li className={styles.navItem}>
               <Link to="/store" className={styles.navLink}>
                 Store

@@ -32,11 +32,12 @@ const sendRefreshToken = (res, refreshtoken) => {
 };
 
 // this one will be used instead
-const sendTokens = (res, accessToken, refreshToken, email) => {
+const sendTokens = (res, accessToken, refreshToken, email, userType) => {
   res.send({
     accessToken,
     refreshToken,
     email,
+    userType,
   });
 };
 

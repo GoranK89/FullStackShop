@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Store from "./components/Store";
+import SellerDashboard from "./components/SellerDashboard";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Store />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <SellerDashboard />
               </ProtectedRoute>
             }
           />

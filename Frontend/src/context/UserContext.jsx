@@ -6,6 +6,7 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [serverMessage, setServerMessage] = useState("");
   const navigate = useNavigate();
@@ -36,10 +37,10 @@ export const UserProvider = ({ children }) => {
       });
 
       setUser(data.email);
+      setUserType(data.userType);
       setAccessToken(data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       setServerMessage(`Logging in with: ${data.email}`);
-
       //TODO: redirect to content page after 1 second
       setTimeout(() => navigate("/store"), 1000);
     } catch (error) {
@@ -90,6 +91,7 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         setUser,
+        userType,
         accessToken,
         setAccessToken,
         register,
