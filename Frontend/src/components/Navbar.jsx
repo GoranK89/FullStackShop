@@ -22,7 +22,7 @@ function Navbar() {
               </Link>
             </li>
           )}
-          {userType === "seller" && (
+          {accessToken && userType === "seller" && (
             <li className={styles.navItem}>
               <Link to="/dashboard" className={styles.navLink}>
                 Dashboard

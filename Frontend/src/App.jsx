@@ -20,7 +20,7 @@ function App() {
           <Route
             path="/store"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole={"buyer"}>
                 <Store />
               </ProtectedRoute>
             }
@@ -28,7 +28,7 @@ function App() {
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute requiredRole={"seller"}>
                 <SellerDashboard />
               </ProtectedRoute>
             }

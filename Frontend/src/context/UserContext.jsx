@@ -5,8 +5,10 @@ import useApi from "../hooks/useApi";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("email") || null);
+  const [userType, setUserType] = useState(
+    localStorage.getItem("userType") || null
+  );
   const [accessToken, setAccessToken] = useState(null);
   const [serverMessage, setServerMessage] = useState("");
   const navigate = useNavigate();
@@ -40,9 +42,10 @@ export const UserProvider = ({ children }) => {
       setUserType(data.userType);
       setAccessToken(data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("userType", data.userType);
+      localStorage.setItem("email", data.email);
       setServerMessage(`Logging in with: ${data.email}`);
-      //TODO: redirect to content page after 1 second
-      setTimeout(() => navigate("/store"), 1000);
+      setTimeout(() => navigate("/"), 1000);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
@@ -53,7 +56,10 @@ export const UserProvider = ({ children }) => {
       const data = await apiRequest("http://localhost:5000/logout", "POST");
 
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userType");
+      localStorage.removeItem("email");
       setUser(null);
+      setUserType(null);
       setAccessToken(null);
       setServerMessage(`${data.message}`);
 
@@ -84,7 +90,7 @@ export const UserProvider = ({ children }) => {
     }
     checkRefreshToken();
     effectRan.current = true;
-  }, []);
+  }, [apiRequest]);
 
   return (
     <UserContext.Provider
