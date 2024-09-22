@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+}
+
+/* SIDEBAR */
+.sideBar {
+  width: 200px;
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.navList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.navItem {
+  margin: 10px 0;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}
+
+/* CONTENT */
+.content {
+  padding: 20px;
+}
