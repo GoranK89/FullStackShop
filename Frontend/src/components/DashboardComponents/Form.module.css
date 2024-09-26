@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  margin-top: 10px;
+  width: 100%;
+  border: none;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #45a049;
+}

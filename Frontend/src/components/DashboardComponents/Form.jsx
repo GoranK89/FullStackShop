@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
 import FormField from "./FormField";
+import styles from "./Form.module.css";
 
 const Form = ({ buttonText, fields }) => {
   const { setSetupStore, setProduct } = useContext(DashboardContext);
@@ -53,7 +54,7 @@ const Form = ({ buttonText, fields }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       {fields.map((field, index) => (
         <FormField
           key={index}
@@ -63,7 +64,7 @@ const Form = ({ buttonText, fields }) => {
           onChange={(value) => handleChange(field.name, value)}
         />
       ))}
-      <button type="submit" className="submitButton">
+      <button type="submit" className={styles.submitButton}>
         {buttonText}
       </button>
     </form>

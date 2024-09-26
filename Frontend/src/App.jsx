@@ -38,6 +38,7 @@ function App() {
                 </ProtectedRoute>
               }
             >
+              <Route index element={<StoreSetup />} /> {/* Default route */}
               <Route path="store-setup" element={<StoreSetup />} />
               <Route path="products" element={<Products />} />
               <Route path="orders" element={<Orders />} />
