@@ -1,5 +1,10 @@
 const Orders = () => {
-  return <div>Orders</div>;
+  return (
+    <div>
+      <h2>Orders</h2>
+      <p>Orders will be displayed here.</p>
+    </div>
+  );
 };
 
 export default Orders;

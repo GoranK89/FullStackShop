@@ -3,26 +3,25 @@ import { createContext, useState } from "react";
 export const DashboardContext = createContext();
 
 export const DashboardProvider = ({ children }) => {
-  const [storeName, setStoreName] = useState("");
-  const [description, setDescription] = useState("");
-  const [logo, setLogo] = useState(null);
-  const [contactEmail, setContactEmail] = useState("");
-  const [products, setProducts] = useState([]);
+  const [setupStore, setSetupStore] = useState({
+    storeName: "",
+    storeDescription: "",
+    storeEmail: "",
+  });
+  const [product, setProduct] = useState({
+    productName: "",
+    productDescription: "",
+    productPrice: "",
+  });
   const [orders, setOrders] = useState([]);
 
   return (
     <DashboardContext.Provider
       value={{
-        storeName,
-        setStoreName,
-        description,
-        setDescription,
-        logo,
-        setLogo,
-        contactEmail,
-        setContactEmail,
-        products,
-        setProducts,
+        setupStore,
+        setSetupStore,
+        product,
+        setProduct,
         orders,
         setOrders,
       }}
