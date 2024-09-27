@@ -38,9 +38,11 @@ app.use("/logout", logoutRouter);
 const storeRouter = require("./routes/store");
 app.use("/store", storeRouter);
 
-// Protected route
-const protectedRouter = require("./routes/protected");
-app.use("/protected", protectedRouter);
+const dashboardRouter = require("./routes/dashboard");
+app.use("/dashboard", dashboardRouter);
+
+const productRouter = require("./routes/product");
+app.use("/product", productRouter);
 
 // Refresh Token route
 const refreshTokenRouter = require("./routes/refreshToken");
@@ -49,3 +51,16 @@ app.use("/refresh", refreshTokenRouter);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// chain multiple methods to the same route - routes
+// router
+//   .route("/:id")
+//   .get((req, res) => {
+//     res.send(`GET User with id: ${req.params.id}`);
+//   })
+//   .put((req, res) => {
+//     res.send(`UPDATE User with id: ${req.params.id}`);
+//   })
+//   .delete((req, res) => {
+//     res.send(`DELETE User with id: ${req.params.id}`);
+//   });
