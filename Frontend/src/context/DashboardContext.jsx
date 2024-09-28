@@ -6,6 +6,7 @@ export const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const { apiRequest, loading, error } = useApi();
   const [serverMessage, setServerMessage] = useState("");
+  const [createdStores, setCreatedStores] = useState([]);
 
   const [setupStore, setSetupStore] = useState({
     storeName: "",
@@ -22,14 +23,36 @@ export const DashboardProvider = ({ children }) => {
   const createStore = async (storeData) => {
     try {
       const data = await apiRequest(
-        "http://localhost:5000/createStore",
+        "http://localhost:5000/stores",
         "POST",
-        {
-          storeData,
-        }
+        storeData
       );
       setServerMessage(`${data.message}`);
       console.log(data);
+    } catch (error) {
+      setServerMessage(`Error: ${error.message}`);
+    }
+  };
+
+  const getAllUserStores = async (userEmail) => {
+    try {
+      const data = await apiRequest(
+        `http://localhost:5000/stores?userEmail=${userEmail}`,
+        "GET"
+      );
+      setCreatedStores(data);
+    } catch (error) {
+      setServerMessage(`Error: ${error.message}`);
+    }
+  };
+
+  const deleteStore = async (storeId) => {
+    try {
+      const data = await apiRequest(
+        `http://localhost:5000/stores?storeId=${storeId}`,
+        "DELETE"
+      );
+      setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
@@ -40,11 +63,10 @@ export const DashboardProvider = ({ children }) => {
       const data = await apiRequest(
         "http://localhost:5000/addProduct",
         "POST",
-        {
-          productData,
-        }
+        productData
       );
       setServerMessage(`${data.message}`);
+      console.log(data);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
@@ -61,6 +83,9 @@ export const DashboardProvider = ({ children }) => {
         setOrders,
         createStore,
         addProduct,
+        getAllUserStores,
+        createdStores,
+        deleteStore,
       }}
     >
       {children}

@@ -35,8 +35,8 @@ const logoutRouter = require("./routes/logout");
 app.use("/logout", logoutRouter);
 
 // DASHBOARD routes
-const createStoreRouter = require("./routes/createStore");
-app.use("/createStore", createStoreRouter);
+const storeRouter = require("./routes/stores");
+app.use("/stores", storeRouter);
 
 const productRouter = require("./routes/product");
 app.use("/addProduct", productRouter);

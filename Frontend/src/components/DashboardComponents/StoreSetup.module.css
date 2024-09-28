@@ -1,4 +1,25 @@
 .storeSetupContainer {
+  display: flex;
+  gap: 5rem;
 }
 .formGroup {
+}
+
+.cratedStoresContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.createdStores {
+  display: flex;
+  gap: 2rem;
+}
+
+.store {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
 }
