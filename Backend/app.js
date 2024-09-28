@@ -34,17 +34,14 @@ app.use("/login", loginRouter);
 const logoutRouter = require("./routes/logout");
 app.use("/logout", logoutRouter);
 
-// STORE route
-const storeRouter = require("./routes/store");
-app.use("/store", storeRouter);
-
-const dashboardRouter = require("./routes/dashboard");
-app.use("/dashboard", dashboardRouter);
+// DASHBOARD routes
+const createStoreRouter = require("./routes/createStore");
+app.use("/createStore", createStoreRouter);
 
 const productRouter = require("./routes/product");
-app.use("/product", productRouter);
+app.use("/addProduct", productRouter);
 
-// Refresh Token route
+// REFRESH TOKEN route
 const refreshTokenRouter = require("./routes/refreshToken");
 app.use("/refresh", refreshTokenRouter);
 

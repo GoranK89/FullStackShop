@@ -3,7 +3,7 @@ import { DashboardContext } from "../../context/DashboardContext";
 import FormField from "./FormField";
 import styles from "./Form.module.css";
 
-const Form = ({ buttonText, fields }) => {
+const Form = ({ buttonText, fields, formSubmitReq }) => {
   const { setSetupStore, setProduct } = useContext(DashboardContext);
   const [formState, setFormState] = useState({
     storeName: "",
@@ -39,8 +39,21 @@ const Form = ({ buttonText, fields }) => {
       productPrice: formState.productPrice,
     }));
 
-    // TODO: replace with backend call
-    console.log(`Submitting form with values: ${JSON.stringify(formState)}`);
+    // hacky and simple way to check if the form is for store or product
+    if (formState.storeName !== "") {
+      formSubmitReq({
+        storeName: formState.storeName,
+        storeDescription: formState.storeDescription,
+        storeEmail: formState.storeEmail,
+      });
+    }
+    if (formState.productName !== "") {
+      formSubmitReq({
+        productName: formState.productName,
+        productDescription: formState.productDescription,
+        productPrice: formState.productPrice,
+      });
+    }
 
     setFormState((prevFormState) => ({
       ...prevFormState,
