@@ -17,6 +17,7 @@ export const DashboardProvider = ({ children }) => {
     productName: "",
     productDescription: "",
     productPrice: "",
+    productStock: "",
   });
   const [orders, setOrders] = useState([]);
 

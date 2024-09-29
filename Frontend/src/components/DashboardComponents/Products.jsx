@@ -22,6 +22,11 @@ const Products = () => {
       labelText: "Product Price",
       inputType: "number",
     },
+    {
+      name: "productStock",
+      labelText: "Ammount in Stock",
+      inputType: "number",
+    },
   ];
 
   return (

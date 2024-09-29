@@ -41,6 +41,7 @@ const Form = ({ buttonText, fields, formSubmitReq }) => {
       productName: formState.productName,
       productDescription: formState.productDescription,
       productPrice: formState.productPrice,
+      productStock: formState.productStock,
     }));
 
     // hacky and simple way to check if the form is for store or product
@@ -58,6 +59,7 @@ const Form = ({ buttonText, fields, formSubmitReq }) => {
         productName: formState.productName,
         productDescription: formState.productDescription,
         productPrice: formState.productPrice,
+        productStock: formState.productStock,
       });
     }
 
@@ -69,6 +71,7 @@ const Form = ({ buttonText, fields, formSubmitReq }) => {
       productName: "",
       productDescription: "",
       productPrice: "",
+      productStock: "",
     }));
   };
 

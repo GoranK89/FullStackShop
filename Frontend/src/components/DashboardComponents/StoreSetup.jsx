@@ -27,13 +27,15 @@ const StoreSetup = () => {
     },
   ];
 
-  useEffect(() => {
-    getAllUserStores(user);
-  }, [user, deleteStore]);
-
   const onDeleteHandler = (storeId) => {
     deleteStore(storeId);
+    getAllUserStores(user);
   };
+
+  useEffect(() => {
+    getAllUserStores(user);
+    console.log("useEffect in StoreSetup component ran");
+  }, [user]);
 
   return (
     <div className={styles.storeSetupContainer}>
