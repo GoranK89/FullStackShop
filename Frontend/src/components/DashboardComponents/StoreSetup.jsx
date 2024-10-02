@@ -1,14 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
-import { UserContext } from "../../context/UserContext";
 import styles from "./StoreSetup.module.css";
 import Form from "./Form";
 
 const StoreSetup = () => {
   const dashboardContext = useContext(DashboardContext);
-  const { user } = useContext(UserContext);
-  const { createStore, createdStores, getAllUserStores, deleteStore } =
-    dashboardContext;
+  const { createStore, deleteStore, existingStores } = dashboardContext;
   const fields = [
     {
       name: "storeName",
@@ -29,13 +26,7 @@ const StoreSetup = () => {
 
   const onDeleteHandler = (storeId) => {
     deleteStore(storeId);
-    getAllUserStores(user);
   };
-
-  useEffect(() => {
-    getAllUserStores(user);
-    console.log("useEffect in StoreSetup component ran");
-  }, [user]);
 
   return (
     <div className={styles.storeSetupContainer}>
@@ -50,7 +41,7 @@ const StoreSetup = () => {
       <div className={styles.cratedStoresContainer}>
         <h2>Created Stores</h2>
         <div className={styles.createdStores}>
-          {createdStores.map((store) => (
+          {existingStores.map((store) => (
             <div key={store.id} className={styles.store}>
               <h3>{store.store_name}</h3>
               <p>{store.store_description}</p>

@@ -4,7 +4,7 @@ import Form from "./Form";
 import styles from "./Products.module.css";
 
 const Products = () => {
-  const { addProduct } = useContext(DashboardContext);
+  const { addProduct, products, deleteProduct } = useContext(DashboardContext);
 
   const fields = [
     {
@@ -29,14 +29,37 @@ const Products = () => {
     },
   ];
 
+  const onDeleteHandler = (productId) => {
+    deleteProduct(productId);
+  };
+
   return (
     <div className={styles.productsContainer}>
-      <h2>Add your products</h2>
-      <Form
-        buttonText="Add Product"
-        fields={fields}
-        formSubmitReq={addProduct}
-      />
+      <div>
+        <h2>Add your products</h2>
+        <Form
+          buttonText="Add Product"
+          fields={fields}
+          formSubmitReq={addProduct}
+        />
+      </div>
+      <div className={styles.addedProductsContainer}>
+        <h2>Added Products</h2>
+        <div className={styles.createdProducts}>
+          {products?.map((product) => (
+            <div key={product.id} className={styles.product}>
+              <h3>{product.product_name}</h3>
+              <p>Description: {product.product_description}</p>
+              <p>Price: {product.product_price}</p>
+              <p>Ammount in stock: {product.product_stock}</p>
+              <p>Added to stores: {product.store_id || "None"}</p>
+              <button onClick={() => onDeleteHandler(product.id)}>
+                Delete Product
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

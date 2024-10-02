@@ -1,0 +1,23 @@
+.productsContainer {
+  display: flex;
+  gap: 5rem;
+}
+
+.addedProductsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.createdProducts {
+  display: flex;
+  gap: 2rem;
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+}

@@ -10,7 +10,13 @@ const createStore = async (req, res) => {
       storeDescription,
       storeEmail,
     ]);
-    res.status(200).json({ message: `Store: "${storeName}" created` });
+    const allUserStores = await pool.query(queries.getAllUserStores, [
+      userEmail,
+    ]);
+    res.status(200).json({
+      message: `Store: "${storeName}" created`,
+      allUserStores: allUserStores.rows,
+    });
   } catch (error) {
     console.error("Error creating store: ", error);
     res
@@ -19,24 +25,32 @@ const createStore = async (req, res) => {
   }
 };
 
-const getAllUserStores = async (req, res) => {
+const getStores = async (req, res) => {
   const { userEmail } = req.query;
   try {
-    const result = await pool.query(queries.getAllUserStores, [userEmail]);
-    res.status(200).json(result.rows);
+    const allUserStores = await pool.query(queries.getAllUserStores, [
+      userEmail,
+    ]);
+    res.status(200).json({ allUserStores: allUserStores.rows });
   } catch (error) {
-    console.error("Error getting user stores: ", error);
+    console.error("Error getting stores: ", error);
     res
       .status(500)
-      .json({ error: "Internal Server Error during getting user stores" });
+      .json({ error: "Internal Server Error during store retrieval" });
   }
 };
 
 const deleteStore = async (req, res) => {
-  const { storeId } = req.query;
+  const { storeId, userEmail } = req.query;
   try {
     await pool.query(queries.deleteStore, [storeId]);
-    res.status(200).json({ message: `Store with id: ${storeId} deleted` });
+    const allUserStores = await pool.query(queries.getAllUserStores, [
+      userEmail,
+    ]);
+    res.status(200).json({
+      message: `Store with id: ${storeId} deleted`,
+      allUserStores: allUserStores.rows,
+    });
   } catch (error) {
     console.error("Error deleting store: ", error);
     res
@@ -45,4 +59,4 @@ const deleteStore = async (req, res) => {
   }
 };
 
-module.exports = { createStore, getAllUserStores, deleteStore };
+module.exports = { createStore, getStores, deleteStore };

@@ -1,12 +1,10 @@
 import { useState, useContext } from "react";
-import { DashboardContext } from "../../context/DashboardContext";
 import { UserContext } from "../../context/UserContext";
 import FormField from "./FormField";
 import styles from "./Form.module.css";
 
 const Form = ({ buttonText, fields, formSubmitReq }) => {
   const { user } = useContext(UserContext);
-  const { setSetupStore, setProduct } = useContext(DashboardContext);
   const [formState, setFormState] = useState({
     storeName: "",
     storeDescription: "",
@@ -27,22 +25,6 @@ const Form = ({ buttonText, fields, formSubmitReq }) => {
     e.preventDefault();
 
     if (!formState.storeName && !formState.productName) return;
-
-    // Update the context state with the form values
-    setSetupStore((prevSetupStore) => ({
-      ...prevSetupStore,
-      storeName: formState.storeName,
-      storeDescription: formState.storeDescription,
-      storeEmail: formState.storeEmail,
-    }));
-
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      productName: formState.productName,
-      productDescription: formState.productDescription,
-      productPrice: formState.productPrice,
-      productStock: formState.productStock,
-    }));
 
     // hacky and simple way to check if the form is for store or product
     if (formState.storeName !== "") {
