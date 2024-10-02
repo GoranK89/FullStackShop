@@ -19,6 +19,7 @@ export const DashboardProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
+  // Create a store, get list of user stores from DB, set data to state
   const createStore = async (storeData) => {
     try {
       const data = await apiRequest(
@@ -27,17 +28,7 @@ export const DashboardProvider = ({ children }) => {
         storeData
       );
 
-      setExistingStores((prevStores) => {
-        // Check if the new data is different from the current state
-        const newStores = data.allUserStores.filter(
-          (store) => !prevStores.some((prevStore) => prevStore.id === store.id)
-        );
-        if (newStores.length > 0) {
-          return [...prevStores, ...newStores];
-        }
-        return prevStores;
-      });
-
+      setExistingStores(data.allUserStores);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
@@ -64,6 +55,7 @@ export const DashboardProvider = ({ children }) => {
     console.log("Getting all stores from DashboardContext");
   }, [user, getAllStores]);
 
+  // Delete a store, get list of user stores from DB, set data to state
   const deleteStore = async (storeId) => {
     const userEmail = user;
 
@@ -71,11 +63,6 @@ export const DashboardProvider = ({ children }) => {
       const data = await apiRequest(
         `http://localhost:5000/stores?storeId=${storeId}&userEmail=${userEmail}`,
         "DELETE"
-      );
-
-      // Update the existingStores state to remove the deleted store
-      setExistingStores((prevStores) =>
-        prevStores.filter((store) => store.id !== storeId)
       );
 
       setExistingStores(data.allUserStores);
