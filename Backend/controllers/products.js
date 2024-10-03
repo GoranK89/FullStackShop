@@ -2,6 +2,8 @@ const pool = require("../db");
 const queries = require("../psqlQuerries/queries");
 
 const addProduct = async (req, res) => {
+  const { userEmail } = req.query;
+
   const {
     productName,
     productDescription,
@@ -16,6 +18,7 @@ const addProduct = async (req, res) => {
   if (storeId) {
     query = queries.addProductWithStoreId;
     values = [
+      userEmail,
       productName,
       productDescription,
       productPrice,
@@ -24,12 +27,27 @@ const addProduct = async (req, res) => {
     ];
   } else {
     query = queries.addProductWithoutStoreId;
-    values = [productName, productDescription, productPrice, productStock];
+    values = [
+      userEmail,
+      productName,
+      productDescription,
+      productPrice,
+      productStock,
+    ];
   }
 
   try {
+    // store products in DB
     await pool.query(query, values);
-    res.status(200).json({ message: `Product: "${productName}" added` });
+    // get all user products
+    const allUserProducts = await pool.query(queries.getAllUserProducts, [
+      userEmail,
+    ]);
+    // send back message and all user products
+    res.status(200).json({
+      message: `Product: "${productName}" added`,
+      allUserProducts: allUserProducts.rows,
+    });
   } catch (error) {
     console.error("Error adding product: ", error);
     res
@@ -39,9 +57,13 @@ const addProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
+  const { userEmail } = req.query;
+
   try {
-    const result = await pool.query(queries.getAllProducts);
-    res.status(200).json(result.rows);
+    const allUserProducts = await pool.query(queries.getAllUserProducts, [
+      userEmail,
+    ]);
+    res.status(200).json({ allUserProducts: allUserProducts.rows });
   } catch (error) {
     console.error("Error getting products: ", error);
     res
@@ -51,10 +73,19 @@ const getAllProducts = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const { productId } = req.query;
+  const { productId, userEmail } = req.query;
   try {
+    // delete product
     await pool.query(queries.deleteProduct, [productId]);
-    res.status(200).json({ message: `Product with id: ${productId} deleted` });
+    // get all user products
+    const allUserProducts = await pool.query(queries.getAllUserProducts, [
+      userEmail,
+    ]);
+    // send back message and all user products
+    res.status(200).json({
+      message: `Product with id: ${productId} deleted`,
+      allUserProducts: allUserProducts.rows,
+    });
   } catch (error) {
     console.error("Error deleting product: ", error);
     res

@@ -38,8 +38,8 @@ app.use("/logout", logoutRouter);
 const storeRouter = require("./routes/stores");
 app.use("/stores", storeRouter);
 
-const productRouter = require("./routes/product");
-app.use("/addProduct", productRouter);
+const productRouter = require("./routes/products");
+app.use("/products", productRouter);
 
 // REFRESH TOKEN route
 const refreshTokenRouter = require("./routes/refreshToken");

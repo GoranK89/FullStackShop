@@ -6,18 +6,18 @@ const register =
 const getUserByEmail = "SELECT * FROM users WHERE email = $1";
 const updateRefreshToken = "UPDATE users SET refresh_token = $1 WHERE id = $2";
 
-// STORES
+// STORES - table name in the database: stores
 const createStore =
   "INSERT INTO stores (user_email, store_name, store_description, store_email) VALUES ($1, $2, $3, $4)";
 const getAllUserStores = "SELECT * FROM stores WHERE user_email = $1";
 const deleteStore = "DELETE FROM stores WHERE id = $1";
 
-// PRODUCTS
+// PRODUCTS - table name in the database: products
 const addProductWithoutStoreId =
-  "INSERT INTO products (product_name, product_description, product_price, product_stock) VALUES ($1, $2, $3, $4)";
+  "INSERT INTO products (user_email, product_name, product_description, product_price, product_stock) VALUES ($1, $2, $3, $4, $5)";
 const addProductWithStoreId =
-  "INSERT INTO products (product_name, product_description, product_price, product_stock, store_id) VALUES ($1, $2, $3, $4, $5::INTEGER[])";
-const getAllProducts = "SELECT * FROM products";
+  "INSERT INTO products (user_email, product_name, product_description, product_price, product_stock, store_ids) VALUES ($1, $2, $3, $4, $5, $6::INTEGER[])";
+const getAllUserProducts = "SELECT * FROM products WHERE user_email = $1";
 const deleteProduct = "DELETE FROM products WHERE id = $1";
 
 module.exports = {
@@ -31,6 +31,6 @@ module.exports = {
   deleteStore,
   addProductWithoutStoreId,
   addProductWithStoreId,
-  getAllProducts,
+  getAllUserProducts,
   deleteProduct,
 };
