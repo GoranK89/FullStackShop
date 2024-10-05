@@ -26,6 +26,7 @@
 }
 
 .store {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -38,6 +39,48 @@
 }
 
 .store:hover {
-  transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btnAddProduct {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btnAddProduct:hover {
+  background-color: #0056b3;
+}
+
+.btnDeleteStore {
+  position: absolute; /* Position it absolutely within the parent */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  width: 30px; /* Set a fixed width */
+  height: 30px; /* Set a fixed height */
+  border-radius: 50%; /* Make it circular */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem; /* Adjust font size as needed */
+  line-height: 1; /* Ensure the "X" is centered */
+}
+
+.btnDeleteStore::before {
+  content: "×";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btnDeleteStore:hover {
+  background-color: #d00;
 }

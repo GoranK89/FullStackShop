@@ -69,6 +69,19 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
+  const addProductToStore = async (storeId, productData) => {
+    try {
+      //
+      const data = await apiRequest(
+        `http://localhost:5000/products?storeId=${storeId}`,
+        "POST",
+        productData
+      );
+    } catch (error) {
+      setServerMessage(`Error: ${error.message}`);
+    }
+  };
+
   // PRODUCTS
   const addProduct = async (productData) => {
     try {

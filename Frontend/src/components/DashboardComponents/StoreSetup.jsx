@@ -28,6 +28,13 @@ const StoreSetup = () => {
     deleteStore(storeId);
   };
 
+  const onAddProductsHandler = (storeId) => {
+    // Popup modal with checkbox for each product - All products added with current user email displayed
+    // Products already in store should be checked
+    // send storeId to DB, add to store_ids column
+    // if storeID exists in store_ids column, display as checked and render product in store
+  };
+
   return (
     <div className={styles.storeSetupContainer}>
       <div className={styles.storeSetupForm}>
@@ -46,7 +53,16 @@ const StoreSetup = () => {
               <h3>{store.store_name}</h3>
               <p>{store.store_description}</p>
               <p>{store.store_email}</p>
-              <button onClick={() => onDeleteHandler(store.id)}>DELETE</button>
+              <button
+                className={styles.btnAddProduct}
+                onClick={() => onAddProductsHandler(store.id)}
+              >
+                Add Products
+              </button>
+              <button
+                className={styles.btnDeleteStore}
+                onClick={() => onDeleteHandler(store.id)}
+              ></button>
             </div>
           ))}
         </div>
