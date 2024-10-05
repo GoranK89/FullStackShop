@@ -1,18 +1,27 @@
 .storeSetupContainer {
   display: flex;
-  gap: 5rem;
+  gap: 2rem;
+  margin-top: 5rem;
 }
-.formGroup {
+
+.storeSetupForm {
+  max-width: 20rem;
+  margin-bottom: 2rem;
 }
 
 .cratedStoresContainer {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .createdStores {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
@@ -22,4 +31,13 @@
   gap: 1rem;
   padding: 2rem;
   border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.store:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }

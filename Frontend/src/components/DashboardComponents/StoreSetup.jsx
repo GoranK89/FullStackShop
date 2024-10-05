@@ -30,7 +30,7 @@ const StoreSetup = () => {
 
   return (
     <div className={styles.storeSetupContainer}>
-      <div>
+      <div className={styles.storeSetupForm}>
         <h2>Store Setup</h2>
         <Form
           buttonText="Create Store"
@@ -39,7 +39,7 @@ const StoreSetup = () => {
         />
       </div>
       <div className={styles.cratedStoresContainer}>
-        <h2>Created Stores</h2>
+        <h2>Your Stores</h2>
         <div className={styles.createdStores}>
           {existingStores.map((store) => (
             <div key={store.id} className={styles.store}>
