@@ -94,4 +94,24 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, getAllProducts, deleteProduct };
+const addProductToStore = async (req, res) => {
+  const { storeId } = req.params;
+  const productIds = req.body;
+  try {
+    // await pool.query(queries.addProductsToStore, [storeId, productIds]);
+    console.log(`receiving storeId: ${storeId} and productIds: ${productIds}`);
+
+    res.status(200).json({ message: "Products added to store" });
+  } catch (error) {
+    console.error("Error adding products to store: ", error);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error during adding products to store" });
+  }
+};
+module.exports = {
+  addProduct,
+  getAllProducts,
+  deleteProduct,
+  addProductToStore,
+};

@@ -8,4 +8,8 @@ router
   .post(productController.addProduct)
   .delete(productController.deleteProduct);
 
+router
+  .route("/:storeId/add-product-to-store")
+  .post(productController.addProductToStore);
+
 module.exports = router;

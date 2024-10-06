@@ -73,10 +73,11 @@ export const DashboardProvider = ({ children }) => {
     try {
       //
       const data = await apiRequest(
-        `http://localhost:5000/products?storeId=${storeId}`,
+        `http://localhost:5000/products/${storeId}/add-product-to-store`,
         "POST",
         productData
       );
+      console.log(data);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
@@ -104,6 +105,7 @@ export const DashboardProvider = ({ children }) => {
         "GET"
       );
       setProducts(data.allUserProducts);
+      console.log(data.allUserProducts);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
@@ -143,6 +145,7 @@ export const DashboardProvider = ({ children }) => {
         deleteStore,
         getAllProducts,
         deleteProduct,
+        addProductToStore,
       }}
     >
       {children}
