@@ -15,7 +15,7 @@ export const DashboardProvider = ({ children }) => {
 
   const { apiRequest, loading, error } = useApi();
   const [serverMessage, setServerMessage] = useState("");
-  const [existingStores, setExistingStores] = useState([]);
+  const [existingStore, setExistingStore] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
@@ -28,7 +28,8 @@ export const DashboardProvider = ({ children }) => {
         storeData
       );
 
-      setExistingStores(data.allUserStores);
+      setExistingStore(data.allUserStores);
+      getSellersStore(userEmail);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
@@ -36,48 +37,28 @@ export const DashboardProvider = ({ children }) => {
   };
 
   // useCallback to prevent infinite useEffect loop
-  const getAllStores = useCallback(async (userEmail) => {
+  const getSellersStore = useCallback(async (userEmail) => {
     try {
       const data = await apiRequest(
         `http://localhost:5000/stores?userEmail=${userEmail}`,
         "GET"
       );
-      setExistingStores(data.allUserStores);
+      setExistingStore(data.allUserStores);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
   }, []);
 
-  // Get all stores on initial render
-  useEffect(() => {
-    getAllStores(userEmail);
-    console.log("Getting all STORES from DashboardContext");
-  }, [userEmail, getAllStores]);
-
   const deleteStore = async (storeId) => {
     try {
       const data = await apiRequest(
-        `http://localhost:5000/stores?storeId=${storeId}&userEmail=${userEmail}`,
+        `http://localhost:5000/stores?storeId=${storeId}`,
         "DELETE"
       );
 
-      setExistingStores(data.allUserStores);
+      setExistingStore({});
       setServerMessage(`${data.message}`);
-    } catch (error) {
-      setServerMessage(`Error: ${error.message}`);
-    }
-  };
-
-  const addProductToStore = async (storeId, productData) => {
-    try {
-      //
-      const data = await apiRequest(
-        `http://localhost:5000/products/${storeId}/add-product-to-store`,
-        "POST",
-        productData
-      );
-      console.log(data);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
@@ -105,17 +86,11 @@ export const DashboardProvider = ({ children }) => {
         "GET"
       );
       setProducts(data.allUserProducts);
-      console.log(data.allUserProducts);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);
     }
   }, []);
-
-  useEffect(() => {
-    getAllProducts(userEmail);
-    console.log("Getting all PRODUCTS from DashboardContext");
-  }, [userEmail, getAllProducts]);
 
   const deleteProduct = async (productId) => {
     try {
@@ -130,22 +105,33 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
+  // Get all stores and products on initial render
+  useEffect(() => {
+    getSellersStore(userEmail);
+    console.log("Getting all STORES from DashboardContext");
+  }, [userEmail, getSellersStore]);
+
+  useEffect(() => {
+    getAllProducts(userEmail);
+    console.log("Getting all PRODUCTS from DashboardContext");
+  }, [userEmail, getAllProducts]);
+
   return (
     <DashboardContext.Provider
       value={{
+        createStore,
+        existingStore,
+        setExistingStore,
+        getSellersStore,
+        deleteStore,
         products,
         setProducts,
         orders,
         setOrders,
-        createStore,
-        getAllStores,
         addProduct,
-        existingStores,
-        setExistingStores,
-        deleteStore,
         getAllProducts,
         deleteProduct,
-        addProductToStore,
+        serverMessage,
       }}
     >
       {children}

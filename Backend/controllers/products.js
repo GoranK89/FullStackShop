@@ -95,13 +95,23 @@ const deleteProduct = async (req, res) => {
 };
 
 const addProductToStore = async (req, res) => {
+  const { userEmail } = req.query;
   const { storeId } = req.params;
   const productIds = req.body;
   try {
-    // await pool.query(queries.addProductsToStore, [storeId, productIds]);
-    console.log(`receiving storeId: ${storeId} and productIds: ${productIds}`);
+    // loop through productIds and add storeId to store_ids column, duplicates are handled in the query
+    for (const productId of productIds) {
+      await pool.query(queries.addProductsToStore, [storeId, productId]);
+    }
 
-    res.status(200).json({ message: "Products added to store" });
+    const allUserProducts = await pool.query(queries.getAllUserProducts, [
+      userEmail,
+    ]);
+
+    res.status(200).json({
+      message: "Products added to store",
+      allUserProducts: allUserProducts.rows,
+    });
   } catch (error) {
     console.error("Error adding products to store: ", error);
     res
@@ -109,6 +119,7 @@ const addProductToStore = async (req, res) => {
       .json({ error: "Internal Server Error during adding products to store" });
   }
 };
+
 module.exports = {
   addProduct,
   getAllProducts,

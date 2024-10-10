@@ -5,7 +5,7 @@ const storesController = require("../controllers/stores");
 // chain multiple methods to the same route - routes
 router
   .route("/")
-  .get(storesController.getStores)
+  .get(storesController.getSellerStore)
   .post(storesController.createStore)
   .delete(storesController.deleteStore);
 
