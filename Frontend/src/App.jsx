@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Store from "./components/Store";
+import Store from "./components/StoreComponents/Store";
 import SellerDashboard from "./components/SellerDashboard";
 import StoreSetup from "./components/DashboardComponents/StoreSetup";
 import Orders from "./components/DashboardComponents/Orders";
