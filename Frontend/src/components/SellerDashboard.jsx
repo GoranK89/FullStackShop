@@ -14,11 +14,6 @@ const SellerDashboard = () => {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link to="products" className={styles.navLink}>
-                Products
-              </Link>
-            </li>
-            <li className={styles.navItem}>
               <Link to="orders" className={styles.navLink}>
                 Orders
               </Link>

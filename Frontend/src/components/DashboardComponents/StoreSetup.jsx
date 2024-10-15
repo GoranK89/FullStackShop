@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { DashboardContext } from "../../context/DashboardContext";
 import styles from "./StoreSetup.module.css";
 import Form from "./Form";
+import Products from "./Products";
 
 const StoreSetup = () => {
   const { createStore, existingStore, deleteStore } =
@@ -47,13 +48,14 @@ const StoreSetup = () => {
       ) : (
         <div className={styles.existingStore}>
           {
-            <div>
+            <div className={styles.storeWrapper}>
               <h1>{existingStore[0].store_name}</h1>
               <p>{existingStore[0].store_description}</p>
               <p>{existingStore[0].store_email}</p>
               <button onClick={onStoreDelete}>Delete Store</button>
             </div>
           }
+          {storeExists && <Products />}
         </div>
       )}
     </div>

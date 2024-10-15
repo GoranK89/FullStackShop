@@ -44,7 +44,7 @@ const Products = () => {
         />
       </div>
       <div className={styles.addedProductsContainer}>
-        <h2>Added Products</h2>
+        <h2>Your Products</h2>
         <div className={styles.createdProducts}>
           {products?.map((product) => (
             <div key={product.id} className={styles.product}>
@@ -52,7 +52,6 @@ const Products = () => {
               <p>Description: {product.product_description}</p>
               <p>Price: {product.product_price}</p>
               <p>Ammount in stock: {product.product_stock}</p>
-              <p>Added to stores: {product.store_id || "None"}</p>
               <button onClick={() => onDeleteHandler(product.id)}>
                 Delete Product
               </button>

@@ -9,7 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Store from "./components/Store";
 import SellerDashboard from "./components/SellerDashboard";
 import StoreSetup from "./components/DashboardComponents/StoreSetup";
-import Products from "./components/DashboardComponents/Products";
 import Orders from "./components/DashboardComponents/Orders";
 
 function App() {
@@ -40,7 +39,6 @@ function App() {
             >
               <Route index element={<StoreSetup />} /> {/* Default route */}
               <Route path="store-setup" element={<StoreSetup />} />
-              <Route path="products" element={<Products />} />
               <Route path="orders" element={<Orders />} />
             </Route>
           </Routes>
