@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
 import { DashboardProvider } from "./context/DashboardContext";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home";
 import Register from "./components/Register";
 import Login from "./components/Login";

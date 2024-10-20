@@ -7,7 +7,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem("email") || null);
   const [userType, setUserType] = useState(
-    localStorage.getItem("userType") || null
+    localStorage.getItem("userType") || "guest"
   );
   const [accessToken, setAccessToken] = useState(null);
   const [serverMessage, setServerMessage] = useState("");
