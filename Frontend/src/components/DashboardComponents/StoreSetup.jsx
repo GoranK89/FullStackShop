@@ -31,9 +31,6 @@ const StoreSetup = () => {
     deleteStore(existingStore[0].id);
   };
 
-  // only 1 store should be created per user
-  // one DB table for sellers and 1 for buyers - if possible
-
   return (
     <div className={styles.storeSetupContainer}>
       {!storeExists ? (

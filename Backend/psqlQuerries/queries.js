@@ -13,12 +13,12 @@ const getSellersStore = "SELECT * FROM stores WHERE user_email = $1";
 const deleteStore = "DELETE FROM stores WHERE id = $1";
 
 // PRODUCTS - table name in the database: products
-const addProductWithoutStoreId =
+const addProduct =
   "INSERT INTO products (user_email, product_name, product_description, product_price, product_stock) VALUES ($1, $2, $3, $4, $5)";
-const addProductWithStoreId =
-  "INSERT INTO products (user_email, product_name, product_description, product_price, product_stock, store_ids) VALUES ($1, $2, $3, $4, $5, $6::INTEGER[])";
-const getAllUserProducts = "SELECT * FROM products WHERE user_email = $1";
+const getAllSellerProducts = "SELECT * FROM products WHERE user_email = $1";
+const getAllProducts = "SELECT * FROM products";
 const deleteProduct = "DELETE FROM products WHERE id = $1";
+const deleteAllSellerProducts = "DELETE FROM products WHERE user_email = $1";
 const addProductsToStore = `
   UPDATE products
   SET store_ids = CASE
@@ -27,25 +27,25 @@ const addProductsToStore = `
   END
   WHERE id = $2;
 `;
-const removeStoreIdFromProducts = `
-  UPDATE products
-  SET store_ids = array_remove(store_ids, $1)
-  WHERE $1 = ANY(store_ids);
-`;
 
 module.exports = {
+  // User queries
   getUsers,
   getUserById,
   register,
   getUserByEmail,
   updateRefreshToken,
+
+  // Store queries
   createStore,
   getSellersStore,
   deleteStore,
-  addProductWithoutStoreId,
-  addProductWithStoreId,
-  getAllUserProducts,
+
+  // Product queries
+  addProduct,
+  getAllSellerProducts,
+  getAllProducts,
   deleteProduct,
+  deleteAllSellerProducts,
   addProductsToStore,
-  removeStoreIdFromProducts,
 };

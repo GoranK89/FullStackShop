@@ -52,12 +52,14 @@ export const DashboardProvider = ({ children }) => {
 
   const deleteStore = async (storeId) => {
     try {
+      // Delete store and associated products (userEmail nedeed to delete relevat products)
       const data = await apiRequest(
-        `http://localhost:5000/stores?storeId=${storeId}`,
+        `http://localhost:5000/stores?storeId=${storeId}&userEmail=${userEmail}`,
         "DELETE"
       );
 
       setExistingStore({});
+      setProducts([]);
       setServerMessage(`${data.message}`);
     } catch (error) {
       setServerMessage(`Error: ${error.message}`);

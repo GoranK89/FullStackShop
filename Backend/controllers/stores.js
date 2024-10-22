@@ -1,10 +1,6 @@
 const pool = require("../db");
 const queries = require("../psqlQuerries/queries");
 
-const getSellerStoreQuerry = async () => {
-  return await pool.query(queries.getSellersStore, [userEmail]);
-};
-
 const createStore = async (req, res) => {
   const { userEmail, storeName, storeDescription, storeEmail } = req.body;
   try {
@@ -43,8 +39,10 @@ const getSellerStore = async (req, res) => {
 };
 
 const deleteStore = async (req, res) => {
-  const { storeId } = req.query;
+  const { storeId, userEmail } = req.query;
+  console.log(userEmail);
   try {
+    await pool.query(queries.deleteAllSellerProducts, [userEmail]);
     await pool.query(queries.deleteStore, [storeId]);
 
     res.status(200).json({
